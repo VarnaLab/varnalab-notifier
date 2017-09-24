@@ -1,0 +1,60 @@
+{
+  "bitly": {
+    "https://api-ssl.bitly.com": {
+      "__domain": {
+        "auth": {
+          "qs": {"access_token": "[0]"}
+        }
+      },
+      "[version]/{endpoint}": {
+        "__path": {
+          "alias": "__default",
+          "version": "v3"
+        }
+      }
+    }
+  },
+  "google": {
+    "https://www.googleapis.com": {
+      "__domain": {
+        "auth": {
+          "auth": {"bearer": "[0]"}
+        }
+      },
+      "calendar/[version]/{endpoint}": {
+        "__path": {
+          "alias": "calendar",
+          "version": "v3"
+        }
+      },
+      "gmail/[version]/{endpoint}": {
+        "__path": {
+          "alias": "gmail",
+          "version": "v1"
+        }
+      }
+    },
+    "https://accounts.google.com": {
+      "o/oauth2/{endpoint}": {
+        "__path": {
+          "alias": "oauth"
+        }
+      }
+    }
+  },
+  "twitter": {
+    "https://api.twitter.com": {
+      "__domain": {
+        "auth": {
+          "oauth": {"token": "[0]", "secret": "[1]"}
+        }
+      },
+      "[version]/{endpoint}.[type]": {
+        "__path": {
+          "alias": "__default",
+          "version": "1.1"
+        }
+      }
+    }
+  }
+}

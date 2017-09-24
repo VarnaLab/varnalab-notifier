@@ -1,0 +1,35 @@
+{
+  "name": "varnalab-notifier",
+  "version": "1.0.0",
+  "description": "Notify about upcoming events in every social network",
+  "private": true,
+  "keywords": [],
+  "license": "MIT",
+  "homepage": "https://github.com/varnalab/varnalab-notifier",
+  "author": "Simeon Velichkov <simeonvelichkov@gmail.com> (https://simov.github.io)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varnalab/varnalab-notifier.git"
+  },
+  "dependencies": {
+    "@request/client": "^0.1.0",
+    "@request/oauth": "^0.1.0",
+    "base64-url": "^2.0.0",
+    "minimist": "^1.2.0",
+    "moment": "^2.18.1",
+    "purest": "^3.1.0"
+  },
+  "devDependencies": {
+    "@request/log": "^0.1.0"
+  },
+  "bin": {
+    "varnalab-notifier": "./bin/index.js"
+  },
+  "main": "",
+  "files": [],
+  "scripts": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
+  }
+}
