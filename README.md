@@ -6,6 +6,7 @@ node varnalab-notifier/bin/ \
   --config /path/to/config.json \
   --auth /path/to/auth.json \
   --events /path/to/events.json \
+  --ids /path/to/ids.json \
   --env environment \
   --notify googlegroups,twitter
 ```
@@ -54,3 +55,5 @@ node varnalab-notifier/bin/ \
 ```
 
 ## events.json
+
+## ids.json

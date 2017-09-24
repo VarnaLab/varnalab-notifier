@@ -6,6 +6,7 @@ if (argv.help) {
   console.log('--config /path/to/config.json')
   console.log('--auth /path/to/auth.json')
   console.log('--events /path/to/events.json')
+  console.log('--ids /path/to/ids.json')
   console.log('--env environment')
   console.log('--notify googlegroups,twitter')
   process.exit()
@@ -26,6 +27,11 @@ if (!argv.events) {
   process.exit()
 }
 
+if (!argv.ids) {
+  console.log('Specify --ids /path/to/ids.json')
+  process.exit()
+}
+
 if (typeof argv.notify !== 'string' || !argv.notify) {
   console.log('Specify --notify googlegroups,twitter')
 }
@@ -33,6 +39,7 @@ if (typeof argv.notify !== 'string' || !argv.notify) {
 var env = process.env.NODE_ENV || argv.env || 'development'
 
 
+var fs = require('fs')
 var path = require('path')
 var Refresh = require('../lib/refresh')
 var GoogleGroups = require('../lib/googlegroups')
@@ -51,7 +58,8 @@ var notify = {
 }
 
 var events = require(path.resolve(process.cwd(), argv.events))
-var upcoming = require('../lib/upcoming')(events)
+var ids = require(path.resolve(process.cwd(), argv.ids))
+var upcoming = events.filter((event) => ids.indexOf(event.id) === -1)
 
 
 if (upcoming.length) {
@@ -59,5 +67,12 @@ if (upcoming.length) {
     argv.notify.split(',')
       .map((provider) => notify[provider].send(upcoming))
   )
+  .then(() => {
+    fs.writeFileSync(
+      path.resolve(process.cwd(), argv.ids),
+      JSON.stringify(ids.concat(upcoming.map((event) => event.id)), null, 2),
+      'utf8'
+    )
+  })
   .catch((err) => console.error(err))
 }
