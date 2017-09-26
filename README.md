@@ -8,7 +8,7 @@ node varnalab-notifier/bin/ \
   --events /path/to/events.json \
   --ids /path/to/ids.json \
   --env environment \
-  --notify googlegroups,twitter
+  --notify calendar,googlegroups,twitter
 ```
 
 ## config.json
