@@ -8,7 +8,7 @@ if (argv.help) {
   console.log('--events /path/to/events.json')
   console.log('--ids /path/to/ids.json')
   console.log('--env environment')
-  console.log('--notify googlegroups,twitter')
+  console.log('--notify calendar,googlegroups,twitter')
   process.exit()
 }
 
@@ -33,7 +33,7 @@ if (!argv.ids) {
 }
 
 if (typeof argv.notify !== 'string' || !argv.notify) {
-  console.log('Specify --notify googlegroups,twitter')
+  console.log('Specify --notify calendar,googlegroups,twitter')
 }
 
 var env = process.env.NODE_ENV || argv.env || 'development'
@@ -42,6 +42,7 @@ var env = process.env.NODE_ENV || argv.env || 'development'
 var fs = require('fs')
 var path = require('path')
 var Refresh = require('../lib/refresh')
+var Calendar = require('../lib/calendar')
 var GoogleGroups = require('../lib/googlegroups')
 var Twitter = require('../lib/twitter')
 
@@ -53,6 +54,7 @@ var auth = require(fpath)
 var refresh = Refresh(auth, env, fpath)
 
 var notify = {
+  calendar: Calendar(config, auth[env].google, refresh),
   googlegroups: GoogleGroups(config, auth[env].google, refresh),
   twitter: Twitter(config, auth[env].twitter),
 }

@@ -16,6 +16,10 @@ node varnalab-notifier/bin/ \
 ```json
 {
   "production": {
+    "calendar": {
+      "id": "lo0fh2tu3nu9vegm8ibf6hhtjg@group.calendar.google.com",
+      "location": "VarnaLab, ul. \"Pencho Slaveykov\" 50, 9000 Varna Center, Varna, Bulgaria"
+    },
     "googlegroups": {
       "name": "VarnaLab",
       "email": "varna-lab@googlegroups.com"
