@@ -64,10 +64,12 @@ if (upcoming.length) {
         'utf8'
       )
       networks.forEach((events) => events.forEach(([res, body]) =>
-        res.statusCode !== 200
-          ? console.error(
-            new Error(JSON.stringify({headers: res.headers, body}, null, 2)))
-          : null
+        res.statusCode !== 200 &&
+          console.error(new Error(JSON.stringify({
+            status: res.statusCode,
+            headers: res.headers,
+            body
+          }, null, 2)))
         )
       )
     })
