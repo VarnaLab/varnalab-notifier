@@ -58,17 +58,17 @@ if (upcoming.length) {
         .map((provider) => notify[provider].send(upcoming))
     )
     .then((networks) => {
+      fs.writeFileSync(
+        path.resolve(process.cwd(), argv.ids),
+        JSON.stringify(ids.concat(upcoming.map((event) => event.id)), null, 2),
+        'utf8'
+      )
       networks.forEach((events) => events.forEach(([res, body]) =>
         res.statusCode !== 200
           ? console.error(
             new Error(JSON.stringify({headers: res.headers, body}, null, 2)))
           : null
         )
-      )
-      fs.writeFileSync(
-        path.resolve(process.cwd(), argv.ids),
-        JSON.stringify(ids.concat(upcoming.map((event) => event.id)), null, 2),
-        'utf8'
       )
     })
   )
