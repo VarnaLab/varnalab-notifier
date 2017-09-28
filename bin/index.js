@@ -12,27 +12,14 @@ if (argv.help) {
   process.exit()
 }
 
-if (!argv.config) {
-  console.log('Specify --config /path/to/config.json')
-  process.exit()
-}
+;['config', 'auth', 'events', 'ids'].forEach((flag) => {
+  if (!argv[flag]) {
+    console.log(`Specify --${flag} /path/to/${flag}.json`)
+    process.exit()
+  }
+})
 
-if (!argv.auth) {
-  console.log('Specify --auth /path/to/auth.json')
-  process.exit()
-}
-
-if (!argv.events) {
-  console.log('Specify --events /path/to/events.json')
-  process.exit()
-}
-
-if (!argv.ids) {
-  console.log('Specify --ids /path/to/ids.json')
-  process.exit()
-}
-
-if (typeof argv.notify !== 'string' || !argv.notify) {
+if (typeof argv.notify !== 'string') {
   console.log('Specify --notify calendar,googlegroups,twitter')
 }
 
