@@ -51,6 +51,21 @@ var ids = require(path.resolve(process.cwd(), argv.ids))
 var upcoming = events.filter((event) => ids.indexOf(event.id) === -1)
 
 
+var log = ([res, body]) =>
+  res.statusCode !== 200
+    ? console.error(new Error([
+        res.statusCode,
+        res.statusMessage,
+        typeof body === 'object' ? JSON.stringify(body) : body
+      ].join(' '))
+    )
+    : console.log([
+        new Date().toString(),
+        res.statusCode,
+        res.statusMessage,
+      ].join(' ')
+    )
+
 if (upcoming.length) {
   refresh('google').then(() =>
     Promise.all(
@@ -63,15 +78,7 @@ if (upcoming.length) {
         JSON.stringify(ids.concat(upcoming.map((event) => event.id)), null, 2),
         'utf8'
       )
-      networks.forEach((events) => events.forEach(([res, body]) =>
-        res.statusCode !== 200 &&
-          console.error(new Error(JSON.stringify({
-            status: res.statusCode,
-            headers: res.headers,
-            body
-          }, null, 2)))
-        )
-      )
+      networks.forEach((events) => events.forEach(log))
     })
   )
   .catch((err) => console.error(err))
