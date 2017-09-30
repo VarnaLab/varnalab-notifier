@@ -40,9 +40,9 @@ node varnalab-notifier/bin/ \
       },
       "user": {
         "token": "",
-        "refresh": ""
-      },
-      "expires": 0
+        "refresh": "",
+        "expires": 0
+      }
     },
     "twitter": {
       "app": {
