@@ -15,16 +15,30 @@ node varnalab-notifier/bin/ \
 
 ```json
 {
-  "production": {
-    "calendar": {
-      "id": "lo0fh2tu3nu9vegm8ibf6hhtjg@group.calendar.google.com",
+  "production": [
+    {
+      "notify": "calendar",
+      "target": "lo0fh2tu3nu9vegm8ibf6hhtjg@group.calendar.google.com",
+      "auth": "VarnaLab's Google Account",
       "location": "VarnaLab, ul. \"Pencho Slaveykov\" 50, 9000 Varna Center, Varna, Bulgaria"
     },
-    "googlegroups": {
-      "name": "VarnaLab",
-      "email": "varna-lab@googlegroups.com"
+    {
+      "notify": "calendar",
+      "target": "itclubsbg@gmail.com",
+      "auth": "ITClubsBG Calendar",
+      "location": "VarnaLab, ul. \"Pencho Slaveykov\" 50, 9000 Varna Center, Varna, Bulgaria"
+    },
+    {
+      "notify": "googlegroups",
+      "target": "varna-lab@googlegroups.com",
+      "auth": "VarnaLab's Google Account"
+    },
+    {
+      "notify": "twitter",
+      "target": "varnalab",
+      "auth": "VarnaLab's Twitter Account"
     }
-  }
+  ]
 }
 ```
 
@@ -32,29 +46,49 @@ node varnalab-notifier/bin/ \
 
 ```json
 {
-  "production": {
-    "google": {
-      "app": {
-        "key": "",
-        "secret": ""
-      },
-      "user": {
-        "token": "",
-        "refresh": "",
-        "expires": 0
-      }
+  "production": [
+    {
+      "provider": "google",
+      "key": "",
+      "secret": "",
+      "users": [
+        {
+          "id": "VarnaLab's Google Account",
+          "account": "varna.hack.lab@gmail.com",
+          "scope": [
+            "calendar",
+            "gmail.send"
+          ],
+          "token": "",
+          "refresh": "",
+          "expires": 0
+        },
+        {
+          "id": "ITClubsBG Calendar",
+          "account": "itclubsbg@gmail.com",
+          "scope": [
+            "calendar"
+          ],
+          "token": "",
+          "refresh": "",
+          "expires": 0
+        }
+      ]
     },
-    "twitter": {
-      "app": {
-        "key": "",
-        "secret": ""
-      },
-      "user": {
-        "token": "",
-        "secret": ""
-      }
+    {
+      "provider": "twitter",
+      "key": "",
+      "secret": "",
+      "users": [
+        {
+          "id": "VarnaLab's Twitter Account",
+          "account": "varnalab",
+          "token": "",
+          "secret": ""
+        }
+      ]
     }
-  }
+  ]
 }
 ```
 
