@@ -34,16 +34,16 @@ var GoogleGroups = require('../lib/googlegroups')
 var Twitter = require('../lib/twitter')
 
 var config = require(path.resolve(process.cwd(), argv.config))[env]
-config.purest = require('../config/purest')
+var purest = require('../config/purest')
 
 var fpath = path.resolve(process.cwd(), argv.auth)
 var auth = require(fpath)
-var refresh = Refresh(config, auth, env, fpath)
+var refresh = Refresh(purest, auth, env, fpath)
 
 var notify = {
-  calendar: Calendar(config, auth[env].google),
-  googlegroups: GoogleGroups(config, auth[env].google),
-  twitter: Twitter(config, auth[env].twitter),
+  calendar: Calendar(purest),
+  googlegroups: GoogleGroups(purest),
+  twitter: Twitter(purest),
 }
 
 var events = require(path.resolve(process.cwd(), argv.events))
@@ -67,10 +67,26 @@ var log = ([res, body]) =>
     )
 
 if (upcoming.length) {
-  refresh('google').then(() =>
+  refresh('google').then(() => {
+
+    var accounts = auth[env]
+      .map((app) => app.users.map((user) => ({app, user})))
+      .reduce((all, auth) => all.concat(auth), [])
+      .reduce((all, auth) => (all[auth.user.id] = auth, all), {})
+
     Promise.all(
       argv.notify.split(',')
-        .map((provider) => notify[provider].send(upcoming))
+        .map((network) => config
+          .filter((target) => target.notify === network)
+          .map((target) =>
+            notify[network].send({
+              events: upcoming,
+              auth: accounts[target.auth],
+              config: target,
+            })
+          )
+        )
+        .reduce((all, target) => all.concat(target), [])
     )
     .then((networks) => {
       fs.writeFileSync(
@@ -80,6 +96,6 @@ if (upcoming.length) {
       )
       networks.forEach((events) => events.forEach(log))
     })
-  )
+  })
   .catch((err) => console.error(err))
 }
