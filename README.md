@@ -31,7 +31,8 @@ node varnalab-notifier/bin/ \
     {
       "notify": "googlegroups",
       "target": "varna-lab@googlegroups.com",
-      "auth": "VarnaLab's Google Account"
+      "auth": "VarnaLab's Google Account",
+      "from": "VarnaLab <noreply@varnalab.org>"
     },
     {
       "notify": "twitter",
