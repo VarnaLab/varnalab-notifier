@@ -29,29 +29,25 @@ var env = process.env.NODE_ENV || argv.env || 'development'
 var fs = require('fs')
 var path = require('path')
 var Refresh = require('../lib/refresh')
-var Calendar = require('../lib/calendar')
-var GoogleGroups = require('../lib/googlegroups')
-var Twitter = require('../lib/twitter')
 
 var config = require(path.resolve(process.cwd(), argv.config))[env]
-var purest = require('../config/purest')
+var notify = {
+  calendar: require('../lib/calendar'),
+  googlegroups: require('../lib/googlegroups'),
+  twitter: require('../lib/twitter'),
+}
 
 var fpath = path.resolve(process.cwd(), argv.auth)
 var auth = require(fpath)
-var refresh = Refresh(purest, auth, env, fpath)
+var refresh = Refresh(auth, env, fpath)
 
-var notify = {
-  calendar: Calendar(purest),
-  googlegroups: GoogleGroups(purest),
-  twitter: Twitter(purest),
-}
 
 var events = require(path.resolve(process.cwd(), argv.events))
 var ids = require(path.resolve(process.cwd(), argv.ids))
 var upcoming = events.filter((event) => ids.indexOf(event.id) === -1)
 
 
-var log = ([res, body]) =>
+var log = ({res, body}) =>
   res.statusCode !== 200
     ? console.error(new Error([
         res.statusCode,
@@ -79,7 +75,7 @@ if (upcoming.length) {
         .map((network) => config
           .filter((target) => target.notify === network)
           .map((target) =>
-            notify[network].send({
+            notify[network]({
               events: upcoming,
               auth: accounts[target.auth],
               config: target,
@@ -97,5 +93,5 @@ if (upcoming.length) {
       networks.forEach((events) => events.forEach(log))
     })
   })
-  .catch((err) => console.error(err))
+  .catch(console.error)
 }
