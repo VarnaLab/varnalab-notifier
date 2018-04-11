@@ -8,7 +8,7 @@ node varnalab-notifier/bin/ \
   --events /path/to/events.json \
   --ids /path/to/ids.json \
   --env environment \
-  --notify calendar,googlegroups,twitter
+  --notify calendar,googlegroups,slack,twitter
 ```
 
 ## config.json
@@ -33,6 +33,10 @@ node varnalab-notifier/bin/ \
       "target": "varna-lab@googlegroups.com",
       "auth": "VarnaLab's Google Account",
       "from": "VarnaLab <noreply@varnalab.org>"
+    },
+    {
+      "notify": "slack",
+      "target": "[Incoming Webhook URL]"
     },
     {
       "notify": "twitter",
