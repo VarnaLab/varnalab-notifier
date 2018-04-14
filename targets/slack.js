@@ -29,14 +29,16 @@ var attachment = (event) => ({
 })
 
 
-module.exports = ({events, config}) =>
+module.exports = ({target, events, target: {options = {}}}) =>
   request({
     method: 'POST',
-    url: config.target,
+    url: target.url,
     json: {
-      username: config.username,
-      icon_url: config.icon_url,
-      channel: config.channel,
+      username: options.username,
+      icon_url: options.icon_url,
+      channel: options.channel,
       attachments: events.map(attachment),
     },
   })
+  .then(({body}) => events.map((event) => ({event, body})))
+  .catch((error) => events.map((event) => ({event, error})))

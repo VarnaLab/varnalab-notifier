@@ -19,14 +19,21 @@
     "request-oauth": "0.0.2"
   },
   "devDependencies": {
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.1.0",
     "request-logs": "0.0.5"
   },
   "bin": {
-    "varnalab-notifier": "./bin/index.js"
+    "varnalab-notifier": "./bin/cli.js"
   },
-  "main": "",
+  "main": "./notifier.js",
   "files": [],
-  "scripts": {},
+  "scripts": {
+    "test": "npm run test:ci",
+    "test:ci": "mocha",
+    "test:cov": "istanbul cover _mocha"
+  },
   "engines": {
     "node": ">=8.0.0"
   }
