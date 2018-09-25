@@ -15,7 +15,7 @@
     "base64-url": "^2.0.0",
     "minimist": "^1.2.0",
     "moment": "^2.18.1",
-    "request-compose": "0.0.11",
+    "request-compose": "^1.0.0",
     "request-oauth": "0.0.2"
   },
   "devDependencies": {
